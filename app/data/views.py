@@ -4,7 +4,6 @@ import uuid
 import calendar
 import datetime
 import pytz
-from umalqurra.hijri_date import HijriDate
 
 from dateutil.parser import parse as parse_date
 from django.template.defaultfilters import date as template_date
@@ -50,7 +49,6 @@ from driver_auth.permissions import (IsAdminOrReadOnly,
                                      is_admin_or_writer)
 from data.tasks import export_csv
 from data.localization.date_utils import (
-    gregorian_to_hijri,
     hijri_day_range,
     hijri_week_range,
     hijri_month_range,
@@ -674,14 +672,7 @@ class DriverRecordViewSet(RecordViewSet, mixins.GenerateViewsetQuery):
         periodic_ranges = {
             'month_of_year': {
                 'type': 'derived',
-                'range': xrange(1, 13),
                 'query': hijri_month_range,
-                'label': lambda x: [
-                    {
-                        'text': HijriDate.month_dict[x],
-                        'translate': False
-                    }
-                ]
             },
             'week_of_year': {
                 'type': 'derived',
@@ -700,14 +691,7 @@ class DriverRecordViewSet(RecordViewSet, mixins.GenerateViewsetQuery):
             },
             'day_of_month': {
                 'type': 'derived',
-                'range': xrange(1, 31),
                 'query': hijri_day_range,
-                'label': lambda x: [
-                    {
-                        'text': str(x),
-                        'translate': False
-                    }
-                ]
             },
             'hour_of_day': {
                 'type': 'source',
@@ -721,13 +705,6 @@ class DriverRecordViewSet(RecordViewSet, mixins.GenerateViewsetQuery):
                 ]
             },
         }
-
-        def ummalqura_day_label(yr, wk, dy):
-            date_um = gregorian_to_hijri(datetime(yr, wk, dy))
-            return [{
-                'text': '{}/{}/{}'.format(date_um.day, date_um.month, date_um.year),
-                'translat': False
-            }]
 
         # Ranges are built below, partly based on the ranges in 'periodic_ranges' above.
         sequential_ranges = {
