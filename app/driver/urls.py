@@ -6,6 +6,7 @@ from rest_framework import routers
 
 from black_spots import views as black_spot_views
 from data import views as data_views
+from data.data_views import record_views as data_record_views
 from driver_auth import views as auth_views
 from user_filters import views as filt_views
 
@@ -20,7 +21,7 @@ router.register('boundarypolygons', data_views.DriverBoundaryPolygonViewSet)
 router.register('csv-export', data_views.RecordCsvExportViewSet, base_name='csv-export')
 router.register('duplicates', data_views.DriverRecordDuplicateViewSet)
 router.register('jars', data_views.AndroidSchemaModelsViewSet, base_name='jars')
-router.register('records', data_views.DriverRecordViewSet)
+router.register('records', data_record_views.DriverRecordViewSet)
 router.register('recordschemas', data_views.DriverRecordSchemaViewSet)
 router.register('recordtypes', data_views.DriverRecordTypeViewSet)
 router.register('recordcosts', data_views.DriverRecordCostConfigViewSet)

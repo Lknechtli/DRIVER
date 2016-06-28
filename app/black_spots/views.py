@@ -1,3 +1,7 @@
+import datetime
+import random
+import uuid
+
 from rest_framework import viewsets
 from rest_framework import mixins as drf_mixins
 from rest_framework.response import Response
@@ -10,12 +14,12 @@ from black_spots.serializers import (BlackSpotSerializer, BlackSpotSetSerializer
                                      BlackSpotConfigSerializer, EnforcerAssignmentInputSerializer,
                                      EnforcerAssignmentSerializer)
 from black_spots.filters import (BlackSpotFilter, BlackSpotSetFilter, EnforcerAssignmentFilter)
-from data.views import build_toddow
+from data.data_views.record_views import build_toddow
 
 from driver_auth.permissions import IsAdminOrReadOnly
 from driver import mixins
-import datetime, random, uuid
 from dateutil import rrule
+
 
 class BlackSpotViewSet(viewsets.ModelViewSet, mixins.GenerateViewsetQuery):
     """ViewSet for black spots"""
